@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 import { Button, Badge } from 'react-native-elements';
 import * as RootNavigation from '../MyScreens/RootNavigation';
 
-const ProductList = () => {
+const ProductListHome = () => {
     const [products, setProducts] = useState([]);
     const headers = {Authorization: "Basic STNDVTcyNFlCM0tZMldKQURBRUxSNFQ3SDdaSTRXRVI="};
 
@@ -74,14 +74,14 @@ const ProductList = () => {
     )
 }
 
-export default ProductList;
+export default ProductListHome;
 
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
       width:'100%',
-      marginBottom:10
+      marginBottom:10,
     },
     product: {
       paddingVertical: 20,
@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
     },
     body: {
       paddingHorizontal:10,
-      flexBasis:'72%'
+      flexBasis:'72%',
+    //   display:'none'
     },
     center: {
       flex: 1,

@@ -7,89 +7,42 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
+import { Button, ThemeProvider, Avatar,Header, Icon } from 'react-native-elements';
+import { useColorScheme } from 'react-native-appearance';
 
-import {
-  StyleSheet, Button, View, Text
-} from 'react-native';
+import {  StyleSheet,TouchableOpacity  } from 'react-native';
+import MyDrawer from './MyDrawer';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Info from './pages/Info';
-import Home from './pages/Home';
-import Navbar from './components/Navbar';
-
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-const Drawer = createDrawerNavigator();
+import * as RootNavigation from './MyScreens/RootNavigation';
+import { DrawerActions } from '@react-navigation/native';
 
 
+const theme = {
+  Button: {
+    raised: true,
+    titleStyle: {
+      color: '#FFF',
+    }
+  },
+  colors: {
+    primary: '#0e122d',
+  }
+};
 
-function Anidados() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen name="menu" component={Horizontal} />
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Info" component={Info} />
-      <Tab.Screen name="Info2" component={Info} />
-    </Tab.Navigator>
 
-      
-  );
-}
-
-function Horizontal() {
-  
-  return (
-      <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={Home} />
-        <Drawer.Screen name="Info" component={Info} />
-      </Drawer.Navigator>
-  );
-}
-
-const Navegacion = ()=>{
-  return(
-    <Stack.Navigator
-    screenOptions = {{
-      headerStyle: {
-        backgroundColor:'#FFDA00'
-      }
-    }}
-
-  >
-        <Stack.Screen 
-          name="Inicio"
-          component={Anidados}
-
-        />
-        <Stack.Screen 
-          name="Contact"
-          component={Horizontal}
-          options={{
-            headerRight: ()=>(
-              <Button
-                title='Comprar'
-                onPress={()=> alert('Esto es una alerta')}
-              />
-            )
-          }}
-        />
-        <Stack.Screen 
-          name="Info"
-          component={Info}
-        />
-  </Stack.Navigator>
-  )
-}
 
 const App = () => {
+  const colorScheme = useColorScheme();
+  
   return (
-      <NavigationContainer>
-        <Navbar />
-           <Anidados />
-      </NavigationContainer>
+    <ThemeProvider theme={theme} useDark={colorScheme === 'dark'}>
+       <Header
+          leftComponent={()=>(<TouchableOpacity onPress={() => RootNavigation.navigationRef.current.dispatch(DrawerActions.openDrawer())}><Icon name='menu' color="#FFF" /></TouchableOpacity>)}
+          centerComponent={{ text: 'Shop App', style: { color: '#FFF' } }}
+          rightComponent={()=>(<TouchableOpacity onPress={() => RootNavigation.navigate('CartScreen')}><Icon name='shopping-cart' color="#FFF" /></TouchableOpacity>)}
+        />
+        <MyDrawer />
+    </ThemeProvider>
   );
 };
 
